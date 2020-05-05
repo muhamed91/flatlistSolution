@@ -1,0 +1,17 @@
+{
+  "name": "getApi",
+  "displayName": "getApi",
+  "expo": {
+    "name": "getApi",
+    "slug": "getApi",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
