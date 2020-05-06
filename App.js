@@ -1,19 +1,50 @@
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
-  );
+export default class App extends React.Component {
+ 
+  state = {
+    isLoading:true,
+    data: []
+  }
+
+  fetchData = async () => {
+    const response = await fetch('https://literaturaislame.com/wp-json/wp/v2/posts');
+
+    const posts = await response.json();
+
+    this.setState({
+      isLoading: true,
+      data: posts
+    });
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  
+
+  render() {
+
+
+      return (
+        <View style={styles.container}>
+          <Text>Hallo</Text>
+          <FlatList
+            data={this.state.data}
+            renderItem={({item})=> <Text>{item.content.rendered.replace(/<\/?[^>]+(>|$)/g, "")}</Text>}
+          />
+        </View>
+      );
+
+  }
 }
 
 const styles = StyleSheet.create({
